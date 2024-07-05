@@ -13,6 +13,14 @@ const document = gql`
     i20: String
     createdAt: Int
   }
+  
+  type Query {
+    document(id: ID!): Document
+  }
+  
+  type Mutation {
+    updateDocument(step: Int!, file: String!): Document
+  }
 `;
 
 module.exports = document;

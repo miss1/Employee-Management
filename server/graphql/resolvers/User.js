@@ -17,9 +17,11 @@ const resolver = {
           throw new Error('Invalid password');
         }
 
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.SECRET_KEY, {
-          expiresIn: "24h",
-        });
+        const token = jwt.sign(
+          { id: user._id, role: user.role, email: user.email },
+          process.env.SECRET_KEY,
+          {expiresIn: "24h"}
+        );
 
         return {
           token,

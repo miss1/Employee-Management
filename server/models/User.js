@@ -34,10 +34,12 @@ const userSchema = new mongoose.Schema({
   information: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Information',
+    unique: true,
   },
   documents: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Document',
+    unique: true,
   },
   status: {
     type: Number,
