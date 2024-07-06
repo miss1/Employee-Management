@@ -2,6 +2,16 @@ const { gql } = require('apollo-server-express');
 
 const information = gql`
   type Person {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    middleName: String
+    phone: String
+    email: String
+    relationship: String!
+  }
+  
+  input PersonInput {
     firstName: String!
     lastName: String!
     middleName: String
@@ -57,8 +67,8 @@ const information = gql`
     workAuthStart: String!
     workAuthEnd: String!
     optReceipt: String
-    reference: Person!
-    emergencyContacts: [Person!]
+    reference: ID!
+    emergencyContacts: [ID!]
   }
   
   input InformationName {
@@ -92,12 +102,13 @@ const information = gql`
   }
   
   input InformationEmergencyContact {
-    emergencyContacts: [Person!]
+    emergencyContacts: [ID!]
   }
   
   type Query {
-    information(id: String!): Information
+    information(id: ID!): Information
     allInformation(search: String): [Information]
+    visaInformation(workAuth: String!, search: String): [Information]
   }
   
   type Mutation {

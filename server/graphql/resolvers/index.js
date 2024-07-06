@@ -4,5 +4,5 @@ const registration = require('./Registration');
 const information = require('./Information');
 const document = require('./Document');
 
-const resolvers = merge(registration, user);
+const resolvers = merge(registration, user, information, document);
 module.exports = resolvers;

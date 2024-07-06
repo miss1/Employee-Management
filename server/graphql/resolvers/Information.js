@@ -58,11 +58,38 @@ const resolver = {
             ]
           }
         }
-        return await Information.find(filter);
+        return await Information.find(filter)
+          .populate({
+          path: 'user',
+          populate: { path: 'documents' }
+        }).exec();
       } catch (e) {
         throw new Error(e.message || 'error');
       }
     },
+    visaInformation: async (parent, { workAuth, search }, context) => {
+      if (context.user == null || context.user.role !== 'HR') {
+        throw new Error('Unauthorized');
+      }
+
+      try {
+        let filter = {workAuth};
+        if (search) {
+          const regex = new RegExp(search, 'i');
+          filter = {
+            workAuth,
+            $or: [
+              { firstName: regex },
+              { lastName: regex },
+              { preferredName: regex }
+            ]
+          }
+        }
+        return await Information.find(filter);
+      } catch (e) {
+        throw new Error(e.message || 'error');
+      }
+    }
   },
   Mutation: {
     createInformation: async (parent, { input }, context) => {

@@ -31,6 +31,17 @@ const resolver = {
         throw new Error(e.message || 'error');
       }
     },
+    usersByStatus: async (parent, { status }, context) => {
+      if (context.user == null || context.user.role !== 'HR') {
+        throw new Error('Unauthorized');
+      }
+
+      try {
+        return await User.find({ status: 0 }).populate('information').populate('documents');
+      } catch (e) {
+        throw new Error(e.message || 'error');
+      }
+    },
   },
   Mutation: {
     register: async (parent, { username, password, token }) => {

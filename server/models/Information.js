@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const personSchema = require('Person');
 
 const informationSchema = new mongoose.Schema({
   user: {
@@ -87,8 +86,16 @@ const informationSchema = new mongoose.Schema({
       message: 'OPT Receipt is required when you are a F1'
     }
   },
-  reference: personSchema,
-  emergencyContacts: [personSchema],
+  reference: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Person',
+  },
+  emergencyContacts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Person',
+    }
+  ],
   createdAt: {
     type: Date,
     default: Date.now

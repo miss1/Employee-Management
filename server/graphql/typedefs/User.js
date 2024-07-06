@@ -22,6 +22,7 @@ const user = gql`
   
   type Query {
     login(username: String!, password: String!): AuthPayload
+    usersByStatus(status: Int!): User
   }
   
   type Mutation {
