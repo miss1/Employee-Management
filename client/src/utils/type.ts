@@ -10,3 +10,15 @@ export interface TokenType {
   role: string,
   email: string
 }
+
+export interface LoginParamsType {
+  username: string,
+  password: string
+}
+
+export interface RegistrationParamsType {
+  username: string,
+  password: string,
+  token: string,
+  email: string
+}

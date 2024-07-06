@@ -27,11 +27,6 @@ const registrationSchema = new mongoose.Schema({
     type: Number,
     default: Date.now()
   },
-  expiresAt: {
-    type: Number,
-    default: Date.now() + 3 * 60 * 60 * 1000,
-    required: true,
-  }
 });
 
 const Registration = mongoose.model('Registration', registrationSchema);

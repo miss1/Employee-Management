@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { UserStateType, TokenType } from '../../utils/type.ts';
+import { parseToken } from '../../utils/util.ts';
 
 export function getUserInfo(token: string): UserStateType {
-  if (token) {
-    const tokenParts = token.split('.');
-    const encodedPayload = tokenParts[1];
-    const decodedPayload = atob(encodedPayload);
-    const userInfo: TokenType = JSON.parse(decodedPayload) as TokenType;
+  const userInfo: TokenType | null = parseToken<TokenType>(token);
+  if (userInfo) {
     return {
       token: token,
       _id: userInfo._id,

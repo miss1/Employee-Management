@@ -1,5 +1,5 @@
-const crypto = require('crypto');
 const Registration = require('../../models/Registration');
+const jwt = require("jsonwebtoken");
 
 const resolver = {
   Query: {
@@ -33,7 +33,7 @@ const resolver = {
       }
 
       try {
-        const token = crypto.randomBytes(7).toString('hex').slice(0, length);
+        const token = jwt.sign({ email: email }, process.env.REGISTRATION_KEY, {expiresIn: "3h"});
         const link = `http://localhost:5173/registration/${token}`;
         const registration = new Registration({
           name,

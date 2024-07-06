@@ -9,7 +9,6 @@ const registration = gql`
     link: String!
     submitted: Boolean
     createdAt: String
-    expiresAt: String!
   }
   
   type Query {

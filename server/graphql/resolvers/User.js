@@ -46,9 +46,11 @@ const resolver = {
   Mutation: {
     register: async (parent, { username, password, token }) => {
       try {
+        const decoded = jwt.verify(token, process.env.REGISTRATION_KEY);
+
         const registrationDoc = await Registration.findOne({ token });
-        if (!registrationDoc || Number(registrationDoc.expiresAt) < Date.now()) {
-          throw new Error('Invalid or expired token');
+        if (!registrationDoc || decoded.email !== registrationDoc.email) {
+          throw new Error('Invalid token');
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
