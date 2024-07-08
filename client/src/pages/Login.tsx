@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Form, Input, Card } from "antd";
 import * as z from "zod";
 import { LoginParamsType } from "../utils/type.ts";
+import { useAppDispatch } from '../app/hooks';
+import { doLogin } from '../app/slice/user.ts';
 
 const schema = z.object({
   username: z
@@ -21,8 +23,10 @@ const Login = () => {
     resolver: zodResolver(schema)
   });
 
-  const doSubmit = (data: LoginParamsType) => {
-    console.log(data)
+  const dispatch = useAppDispatch();
+
+  const doSubmit = async (params: LoginParamsType) => {
+    await dispatch(doLogin(params));
   };
 
   return (

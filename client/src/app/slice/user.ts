@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { UserStateType, TokenType } from '../../utils/type.ts';
+import { UserStateType, TokenType, LoginParamsType } from '../../utils/type.ts';
 import { parseToken } from '../../utils/util.ts';
+import {AppDispatch} from "../store.ts";
+import {message} from "antd";
+import { updateLoading } from './loading.ts';
+import client from '../../graphql/apolloClient.ts';
+import { User } from '../../graphql/user.ts';
 
 export function getUserInfo(token: string): UserStateType {
   const userInfo: TokenType | null = parseToken<TokenType>(token);
@@ -34,5 +39,21 @@ export const userSlice = createSlice({
 });
 
 export const { updateUser } = userSlice.actions;
+
+export const doLogin = (params: LoginParamsType) => async (dispatch: AppDispatch) => {
+  dispatch(updateLoading(true));
+  try {
+    const { data } = await client.mutate({mutation: User, variables: params});
+    localStorage.setItem('token', data.login.token);
+    const info: UserStateType = getUserInfo(data.login.token);
+    dispatch(updateUser(info));
+    window.location.href = `/${info.role}`;
+  } catch (e) {
+    console.error(String(e));
+    message.error(String(e));
+  } finally {
+    dispatch(updateLoading(false));
+  }
+}
 
 export default userSlice.reducer;

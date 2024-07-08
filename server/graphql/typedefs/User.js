@@ -21,12 +21,12 @@ const user = gql`
   }
   
   type Query {
-    login(username: String!, password: String!): AuthPayload
     usersByStatus(status: Int!): User
   }
   
   type Mutation {
     register(username: String!, password: String!, token: String!): String
+    login(username: String!, password: String!): AuthPayload
   }
 `;
 

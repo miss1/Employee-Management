@@ -1,8 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../pages/App.tsx';
 import ErrorPage from '../pages/Error.tsx';
-import ProtectedHrRoute from './ProtectedHrRoute.tsx';
-import ProtectedEmRoute from './ProtectedEmRoute.tsx';
+import ProtectedRoute from './ProtectedRoute.tsx';
 import LoginPage from '../pages/Login.tsx';
 import RegistrationPage from '../pages/Registration.tsx';
 import HrPage from '../pages/hr';
@@ -26,12 +25,12 @@ const router = createBrowserRouter([
       },
       {
         path: '/hr',
-        element: <ProtectedHrRoute><HrPage /></ProtectedHrRoute>,
+        element: <ProtectedRoute type='hr'><HrPage /></ProtectedRoute>,
         errorElement: <ErrorPage />
       },
       {
         path: '/employee',
-        element: <ProtectedEmRoute><EmployeePage/></ProtectedEmRoute>,
+        element: <ProtectedRoute type='employee'><EmployeePage/></ProtectedRoute>,
         errorElement: <ErrorPage />
       },
     ]
