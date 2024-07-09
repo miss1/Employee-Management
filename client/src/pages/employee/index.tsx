@@ -1,7 +1,11 @@
+import Header from '../../components/header';
+import { Outlet } from 'react-router-dom';
+
 const Employee = () => {
   return (
     <>
-      <h1>Employee</h1>
+      <Header type="Employee"/>
+      <Outlet/>
     </>
   );
 };

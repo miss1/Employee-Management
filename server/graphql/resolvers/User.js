@@ -55,7 +55,7 @@ const resolver = {
         }
 
         const token = jwt.sign(
-          { id: user._id, role: user.role, email: user.email },
+          { id: user._id, role: user.role, email: user.email, username: user.username },
           process.env.SECRET_KEY,
           {expiresIn: "24h"}
         );

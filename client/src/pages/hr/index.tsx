@@ -1,7 +1,11 @@
+import Header from '../../components/header';
+import { Outlet } from 'react-router-dom';
+
 const Hr = () => {
   return (
     <>
-      <h1>Hr</h1>
+      <Header type="HR"/>
+      <Outlet/>
     </>
   );
 };
