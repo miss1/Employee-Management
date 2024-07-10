@@ -1,13 +1,16 @@
 import { useForm } from "react-hook-form";
 import { FormItem } from "react-hook-form-antd";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Form, Input, Card } from "antd";
+import { Button, Form, Input, Card, message } from "antd";
 import * as z from "zod";
 import { RegistrationParamsType } from "../utils/type.ts";
 import { useParams } from "react-router-dom";
 import { parseToken } from "../utils/util.ts";
 import { useNavigate } from 'react-router-dom';
 import {useEffect} from "react";
+import { useMutation } from '@apollo/client';
+import { REGISTER } from '../graphql/user.ts';
+import useLoading from '../hooks/useLoading.tsx';
 
 interface tokenType {
   email: string
@@ -36,14 +39,27 @@ const Registration = () => {
     resolver: zodResolver(schema)
   });
 
+  const { showLoading } = useLoading();
+  const [register] = useMutation(REGISTER);
+
   useEffect(() => {
     if (!info) {
       navigate('/error');
     }
   }, []);
 
-  const doSubmit = (data: RegistrationParamsType) => {
-    console.log(data)
+  const doSubmit = async (params: RegistrationParamsType) => {
+    showLoading(true);
+    try {
+      const { data } = await register({variables: {username: params.username, password: params.password, token: params.token}});
+      message.success(data.register);
+      navigate('/');
+    } catch (e) {
+      console.error(String(e));
+      message.error(String(e));
+    } finally {
+      showLoading(false);
+    }
   };
 
   return (

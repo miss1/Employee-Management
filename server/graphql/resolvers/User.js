@@ -31,7 +31,7 @@ const resolver = {
         const user = new User({
           username,
           email: registrationDoc.email,
-          role: 'Employee',
+          role: 'employee',
           password: hashedPassword,
         });
 

@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const resolver = {
   Query: {
     registration: async (parent, { token }, context) => {
-      if (context.user == null || context.user.role !== 'HR') {
+      if (context.user == null || context.user.role !== 'hr') {
         throw new Error('Unauthorized');
       }
 
@@ -15,7 +15,7 @@ const resolver = {
       }
     },
     registrations: async (parent, args, context) => {
-      if (context.user == null || context.user.role !== 'HR') {
+      if (context.user == null || context.user.role !== 'hr') {
         throw new Error('Unauthorized');
       }
 
@@ -28,7 +28,7 @@ const resolver = {
   },
   Mutation: {
     createRegistration: async (parent, { name, email }, context) => {
-      if (context.user == null || context.user.role !== 'HR') {
+      if (context.user == null || context.user.role !== 'hr') {
         throw new Error('Unauthorized');
       }
 
@@ -42,7 +42,7 @@ const resolver = {
           link
         });
         await registration.save();
-        return link;
+        return 'Send token successfully';
       } catch (e) {
         throw new Error(e.message || 'error');
       }

@@ -11,3 +11,23 @@ html, body {
   background: #F9FAFC;
   overflow: hidden;
 }
+
+.ant-radio-button-wrapper-checked {
+  background-color: #1677ff !important;
+  border-color: #1677ff !important;
+  color: white !important;
+}
+
+.ant-radio-button-wrapper:hover {
+  border-color: #1677ff !important;
+}
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+  color: white !important;
+}
+
+.table-column {
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+}

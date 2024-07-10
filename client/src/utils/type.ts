@@ -24,3 +24,8 @@ export interface RegistrationParamsType {
   token: string,
   email: string
 }
+
+export interface RegistrationTokenType {
+  name: string,
+  email: string
+}

@@ -44,6 +44,11 @@ const Header: FC<HeaderProps> = ({ type }) => {
   const location = useLocation();
   const cleanPathname = location.pathname.endsWith('/') ? location.pathname.slice(0, -1) : location.pathname;
 
+  const doLogout = () => {
+    localStorage.clear();
+    window.location.href = '/';
+  };
+
   return (
     <div className={style.header}>
       <Menu onClick={(e) => {navigate(e.key);}} selectedKeys={[cleanPathname]}
@@ -51,7 +56,7 @@ const Header: FC<HeaderProps> = ({ type }) => {
       <Flex gap="small" align="center">
         <UserOutlined style={{fontSize: 20}}/>
         <p>Welcome! {user.username}</p>
-        <Button type="primary" size="small">Logout</Button>
+        <Button type="primary" size="small" onClick={doLogout}>Logout</Button>
       </Flex>
     </div>
   );

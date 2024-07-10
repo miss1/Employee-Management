@@ -5,7 +5,7 @@ import {AppDispatch} from "../store.ts";
 import {message} from "antd";
 import { updateLoading } from './loading.ts';
 import client from '../../graphql/apolloClient.ts';
-import { User } from '../../graphql/user.ts';
+import { LOGIN } from '../../graphql/user.ts';
 
 export function getUserInfo(token: string): UserStateType {
   const userInfo: TokenType | null = parseToken<TokenType>(token);
@@ -46,7 +46,7 @@ export const { updateUser } = userSlice.actions;
 export const doLogin = (params: LoginParamsType) => async (dispatch: AppDispatch) => {
   dispatch(updateLoading(true));
   try {
-    const { data } = await client.mutate({mutation: User, variables: params});
+    const { data } = await client.mutate({mutation: LOGIN, variables: params});
     localStorage.setItem('token', data.login.token);
     const info: UserStateType = getUserInfo(data.login.token);
     dispatch(updateUser(info));

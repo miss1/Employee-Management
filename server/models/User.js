@@ -28,18 +28,19 @@ const userSchema = new mongoose.Schema({
   },
   feedback: {
     type: String,
-    required: true,
     default: '',
   },
   information: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Information',
     unique: true,
+    sparse: true,
   },
   documents: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Document',
     unique: true,
+    sparse: true,
   },
   status: {
     type: Number,

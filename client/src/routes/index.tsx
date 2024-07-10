@@ -9,6 +9,8 @@ import EmployeePage from '../pages/employee';
 import EmployeeProfile from '../pages/hr/EmployeeProfile.tsx';
 import VisaStatus from '../pages/hr/VisaStatus.tsx';
 import HiringManagement from '../pages/hr/HiringManagement.tsx';
+import TokenHistory from '../pages/hr/TokenHistory.tsx';
+import OnboardingReview from '../pages/hr/OnboardingReview.tsx';
 import PersonalInfo from '../pages/employee/PersonalInfo.tsx';
 import EmVisaStatus from '../pages/employee/VisaStatus.tsx';
 
@@ -30,8 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/hr',
-        // element: <ProtectedRoute type='hr'><HrPage /></ProtectedRoute>,
-        element: <HrPage />,
+        element: <ProtectedRoute type='hr'><HrPage /></ProtectedRoute>,
         errorElement: <ErrorPage />,
         children: [
           {
@@ -47,7 +48,19 @@ const router = createBrowserRouter([
           {
             path: '/hr/hiring',
             element: <HiringManagement />,
-            errorElement: <ErrorPage />
+            errorElement: <ErrorPage />,
+            children: [
+              {
+                path: '/hr/hiring',
+                element: <TokenHistory />,
+                errorElement: <ErrorPage />,
+              },
+              {
+                path: '/hr/hiring/onboarding',
+                element: <OnboardingReview />,
+                errorElement: <ErrorPage />,
+              }
+            ]
           }
         ]
       },
