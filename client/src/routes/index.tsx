@@ -6,6 +6,7 @@ import LoginPage from '../pages/Login.tsx';
 import RegistrationPage from '../pages/Registration.tsx';
 import HrPage from '../pages/hr';
 import EmployeePage from '../pages/employee';
+import OnBoarding from '../pages/employee/OnBoarding.tsx';
 import EmployeeProfile from '../pages/hr/EmployeeProfile.tsx';
 import VisaStatus from '../pages/hr/VisaStatus.tsx';
 import HiringManagement from '../pages/hr/HiringManagement.tsx';
@@ -66,13 +67,17 @@ const router = createBrowserRouter([
       },
       {
         path: '/employee',
-        // element: <ProtectedRoute type='employee'><EmployeePage/></ProtectedRoute>,
-        element: <EmployeePage/>,
+        element: <ProtectedRoute type='employee'><EmployeePage/></ProtectedRoute>,
         errorElement: <ErrorPage />,
         children: [
           {
             path: '/employee',
             element: <PersonalInfo />,
+            errorElement: <ErrorPage />
+          },
+          {
+            path: '/employee/onboarding',
+            element: <OnBoarding />,
             errorElement: <ErrorPage />
           },
           {

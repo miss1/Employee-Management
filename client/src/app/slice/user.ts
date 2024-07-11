@@ -47,10 +47,20 @@ export const doLogin = (params: LoginParamsType) => async (dispatch: AppDispatch
   dispatch(updateLoading(true));
   try {
     const { data } = await client.mutate({mutation: LOGIN, variables: params});
-    localStorage.setItem('token', data.login.token);
-    const info: UserStateType = getUserInfo(data.login.token);
+    const userInfo = data.login;
+    localStorage.setItem('token', userInfo.token);
+    localStorage.setItem('onboarding', userInfo.user.onboarding);
+    if (userInfo.user.information) localStorage.setItem('information', userInfo.user.information);
+    if (userInfo.user.documents) localStorage.setItem('documents', userInfo.user.documents);
+
+    const info: UserStateType = getUserInfo(userInfo.token);
     dispatch(updateUser(info));
-    window.location.href = `/${info.role}`;
+
+    if (info.role === 'employee' && userInfo.user.onboarding !== 'approved') {
+      window.location.href = `/${info.role}/onboarding`;
+    } else {
+      window.location.href = `/${info.role}`;
+    }
   } catch (e) {
     console.error(String(e));
     message.error(String(e));

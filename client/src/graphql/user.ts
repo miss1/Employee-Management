@@ -5,7 +5,14 @@ export const LOGIN = gql`
     login(username: $username, password: $password) {
       token,
       user {
-        username
+        username,
+        onboarding,
+        information {
+          id
+        },
+        documents {
+          id
+        }
       }
     }
   }
