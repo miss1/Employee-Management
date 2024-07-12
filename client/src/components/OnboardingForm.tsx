@@ -1,10 +1,10 @@
-import {FC, useEffect, useState} from 'react';
-import {useFieldArray, useForm} from "react-hook-form";
+import { FC, useEffect, useState } from 'react';
+import { useFieldArray, useForm } from "react-hook-form";
 import { FormItem } from "react-hook-form-antd";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {Button, Form, Flex, Input, message, DatePicker, Radio, RadioChangeEvent} from "antd";
+import { Button, Form, Flex, Input, message, DatePicker, Radio, RadioChangeEvent } from "antd";
 import useLoading from '../hooks/useLoading.tsx';
-import { addOnboardingSchema } from '../utils/util.ts';
+import { addOnboardingSchema } from '../utils/validation.ts';
 import { OnboardingInformationType } from '../utils/type.ts';
 import UploadImage from './UploadImage.tsx';
 import UploadFile from './UploadFile.tsx';
@@ -15,17 +15,20 @@ interface propsType {
   callback: (step: number, msg: string) => void
 }
 
+const { RangePicker } = DatePicker;
+
 const OnboardingForm: FC<propsType> = ({ callback }) => {
   const user = useAppSelector((state) => state.user);
   const [picture, setPicture] = useState('');
   const [optReceipt, setOptReceipt] = useState('');
   const [citizenStatus, setCitizenStatus] = useState(true);
+  const [workAuthRange, setWorkAuthRange] = useState('');
 
   const { control, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
       firstName: '', lastName: '', middleName: '', preferredName: '',
       addressLine: '', city: '', state: '', postalCode: '', cellPhone: '', workPhone: '', email: user.email, ssn: '',
-      birthDate: '', gender: 'None', workAuth: 'GreenCard', workAuthOther: '', workAuthStart: '', workAuthEnd: '',
+      birthDate: null, gender: 'None', workAuth: 'GreenCard', workAuthOther: '',
       reference: {firstName: '', lastName: '', middleName: '', phone: '', email: '', relationship: ''},
       emergencyContacts: [{firstName: '', lastName: '', middleName: '', phone: '', email: '', relationship: ''}]
     },
@@ -52,6 +55,7 @@ const OnboardingForm: FC<propsType> = ({ callback }) => {
     console.log(params);
     console.log(optReceipt);
     console.log(picture)
+    console.log(workAuthRange);
   };
 
   return (
@@ -88,7 +92,7 @@ const OnboardingForm: FC<propsType> = ({ callback }) => {
             <Input/>
           </FormItem>
           <FormItem control={control} name="birthDate" label="Date of Birth" style={{width: '47%'}} required>
-            <DatePicker style={{width: "100%"}}/>
+            <DatePicker format="YYYY-MM-DD" style={{width: "100%"}} />
           </FormItem>
         </Flex>
         <FormItem control={control} name="gender" label="Gender" required>
@@ -167,13 +171,25 @@ const OnboardingForm: FC<propsType> = ({ callback }) => {
             }}/>
           </div>
         )}
+        {
+          !citizenStatus && (
+            <div>
+              <p><span className="star">*</span>Start Date & End Date</p>
+              <RangePicker format="YYYY-MM-DD" style={{width: "100%"}} onChange={(_data, text) => {
+                setWorkAuthRange(text.toString())
+              }}/>
+              <div className="ant-form-item-explain-error"
+                   style={{color: "#ff4d4f"}}>{workAuthRange ? '' : 'Required'}</div>
+            </div>
+          )
+        }
         <h2>Who referred you to this company</h2>
         <Flex justify="space-between">
           <FormItem control={control} name="reference.firstName" label="First Name" style={{width: '47%'}} required>
             <Input/>
           </FormItem>
           <FormItem control={control} name="reference.lastName" label="Last Name" style={{width: '47%'}} required>
-            <Input/>
+          <Input/>
           </FormItem>
         </Flex>
         <Flex justify="space-between">

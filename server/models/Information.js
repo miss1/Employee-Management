@@ -83,7 +83,7 @@ const informationSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: function (value) {
-        return this.workAuth !== 'GreenCard' || this.workAuth !== 'Citizen' || value;
+        return this.workAuth === 'GreenCard' || this.workAuth === 'Citizen' || value;
       },
       message: 'Work Auth start date is required'
     }
@@ -92,7 +92,7 @@ const informationSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: function (value) {
-        return this.workAuth !== 'GreenCard' || this.workAuth !== 'citizen' || value;
+        return this.workAuth === 'GreenCard' || this.workAuth === 'Citizen' || value;
       },
       message: 'Work Auth end date is required'
     }
