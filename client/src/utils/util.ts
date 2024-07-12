@@ -21,7 +21,22 @@ export const getCurrentOnboardingStep = (): number => {
   return all.findIndex((item) => item === status);
 };
 
-const onboardingSchema = z.object({
+export const personSchema = z.object({
+  firstName: z
+    .string()
+    .min(1, { message: "Required" })
+    .max(10, { message: "FirstName should be less than 10 characters" }),
+  lastName: z
+    .string()
+    .min(1, { message: "Required" })
+    .max(10, { message: "LastName should be less than 10 characters" }),
+  middleName: z.string().optional(),
+  phone: z.string().regex(/^1?\s*\d{3}\s*-?\s*\d{3}\s*-?\s*\d{4}$/, { message: "Invalid US phone number"}).optional(),
+  email: z.string().email("Invalid email address").optional(),
+  relationship: z.string().optional(),
+});
+
+export const addOnboardingSchema = z.object({
   firstName: z
     .string()
     .min(1, { message: "Required" })
@@ -53,15 +68,9 @@ const onboardingSchema = z.object({
   birthDate: z.string().min(1, { message: "Required" }),
   gender: z.string().min(1, { message: "Required" }),
   workAuth: z.string().min(1, { message: "Required" }),
+  workAuthOther: z.string(),
   workAuthStart: z.string().min(1, { message: "Required" }),
   workAuthEnd: z.string().min(1, { message: "Required" }),
-  optReceipt: z.string().min(1, { message: "Required" }).url("Invalid OPT Receipt").optional(),
+  reference: personSchema,
+  emergencyContacts: z.array(personSchema),
 });
-
-export const addOnboardingSchema = onboardingSchema.refine(
-  (data) => (data.workAuth !== 'F1' || (data.workAuth === 'F1' && data.optReceipt)),
-  {
-    message: 'OPT Receipt is required',
-    path: ['optReceipt'],
-  }
-);

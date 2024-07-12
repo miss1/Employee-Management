@@ -39,8 +39,9 @@ const information = gql`
     birthDate: String!
     gender: String!
     workAuth: String!
-    workAuthStart: String!
-    workAuthEnd: String!
+    workAuthOther: String
+    workAuthStart: String
+    workAuthEnd: String
     optReceipt: String
     reference: Person!
     emergencyContacts: [Person!]
@@ -64,11 +65,12 @@ const information = gql`
     birthDate: String!
     gender: String!
     workAuth: String!
-    workAuthStart: String!
-    workAuthEnd: String!
+    workAuthOther: String
+    workAuthStart: String
+    workAuthEnd: String
     optReceipt: String
-    reference: ID!
-    emergencyContacts: [ID!]
+    reference: PersonInput!
+    emergencyContacts: [PersonInput!]
   }
   
   input InformationName {

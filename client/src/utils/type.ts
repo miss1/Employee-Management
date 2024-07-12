@@ -30,6 +30,15 @@ export interface RegistrationTokenType {
   email: string
 }
 
+export interface ContactType {
+  firstName: string,
+  lastName: string,
+  middleName: string,
+  phone: string,
+  email: string,
+  relationship: string
+}
+
 export interface OnboardingInformationType {
   firstName: string,
   lastName: string,
@@ -46,7 +55,9 @@ export interface OnboardingInformationType {
   birthDate: string,
   gender: string,
   workAuth: string,
+  workAuthOther: string,
   workAuthStart: string,
   workAuthEnd: string,
-  optReceipt: string
+  reference: ContactType,
+  emergencyContacts: ContactType[]
 }

@@ -66,16 +66,36 @@ const informationSchema = new mongoose.Schema({
     required: true,
   },
   workAuth: {
-    type: String,  // green card, citizen, H1-B, F1, L2...
+    type: String,
     required: true,
+    enum: ['GreenCard', 'Citizen', 'H1-B', 'L2', 'F1', 'H4', 'Other'],
+  },
+  workAuthOther: {
+    type: String,
+    validate: {
+      validator: function (value) {
+        return this.workAuth !== 'Other' || (this.workAuth === 'Other' && value);
+      },
+      message: 'Work Auth is required'
+    }
   },
   workAuthStart: {
     type: String,
-    required: true,
+    validate: {
+      validator: function (value) {
+        return this.workAuth !== 'GreenCard' || this.workAuth !== 'Citizen' || value;
+      },
+      message: 'Work Auth start date is required'
+    }
   },
   workAuthEnd: {
     type: String,
-    required: true,
+    validate: {
+      validator: function (value) {
+        return this.workAuth !== 'GreenCard' || this.workAuth !== 'citizen' || value;
+      },
+      message: 'Work Auth end date is required'
+    }
   },
   optReceipt: {
     type: String,
@@ -89,6 +109,7 @@ const informationSchema = new mongoose.Schema({
   reference: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Person',
+    require: true
   },
   emergencyContacts: [
     {
