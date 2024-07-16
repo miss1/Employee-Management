@@ -9,12 +9,22 @@ import type { UploadFile } from 'antd';
 import fileIcon from '../assets/pdf_icon.svg';
 
 interface propsType {
-  callback: (url: string) => void
+  callback: (url: string) => void,
+  disabled: boolean,
+  defaultUrl: string,
 }
 
-const UploadFile: FC<propsType> = ({ callback }) => {
+const UploadFile: FC<propsType> = ({ callback, disabled, defaultUrl }) => {
   const user = useAppSelector((state) => state.user);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [fileList, setFileList] = useState<UploadFile[]>(defaultUrl ? [
+    {
+      uid: '-1',
+      name: `${user.username}_OPT.pdf`,
+      status: 'done',
+      url: defaultUrl,
+      thumbUrl: fileIcon,
+    }
+  ] : []);
 
   const customRequest = async ({ file }: UploadRequestOption) => {
     const storageRef = ref(storage, `file/${user.username}_OPT`);
@@ -91,7 +101,8 @@ const UploadFile: FC<propsType> = ({ callback }) => {
       fileList={fileList}
       customRequest={customRequest}
       onPreview={previewFile}
-      onRemove={deleteFile}>
+      onRemove={deleteFile}
+      disabled={disabled}>
       <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
     </Upload>
   );

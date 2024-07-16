@@ -12,7 +12,7 @@ const resolver = {
         const document = await Document.findById(docID);
 
         const userID = new mongoose.Types.ObjectId(context.user._id);
-        if (context.user.role === 'Employee' && document.user !== userID) {
+        if (context.user.role === 'employee' && document.user !== userID) {
           throw new Error('Unauthorized');
         }
 
@@ -24,7 +24,7 @@ const resolver = {
   },
   Mutation: {
     updateDocument: async (parent, { step, file }, context) => {
-      if (context.user == null || context.user.role !== 'Employee') {
+      if (context.user == null || context.user.role !== 'employee') {
         throw new Error('Unauthorized');
       }
 

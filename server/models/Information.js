@@ -1,11 +1,45 @@
 const mongoose = require('mongoose');
 
+const personSchema = new mongoose.Schema({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  middleName: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  relationship: {
+    type: String,
+    required: true,
+  },
+}, { _id: false });
+
 const informationSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
     unique: true
+  },
+  onboarding: {
+    type: String,
+    required: true,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
+  },
+  feedback: {
+    type: String,
+    default: '',
   },
   firstName: {
     type: String,
@@ -107,16 +141,13 @@ const informationSchema = new mongoose.Schema({
     }
   },
   reference: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Person',
+    type: personSchema,
     require: true
   },
-  emergencyContacts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Person',
-    }
-  ],
+  emergencyContacts: {
+    type: [personSchema],
+    require: true
+  },
   createdAt: {
     type: Date,
     default: Date.now

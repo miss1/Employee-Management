@@ -49,18 +49,11 @@ export const doLogin = (params: LoginParamsType) => async (dispatch: AppDispatch
     const { data } = await client.mutate({mutation: LOGIN, variables: params});
     const userInfo = data.login;
     localStorage.setItem('token', userInfo.token);
-    localStorage.setItem('onboarding', userInfo.user.onboarding);
-    if (userInfo.user.information) localStorage.setItem('information', userInfo.user.information);
-    if (userInfo.user.documents) localStorage.setItem('documents', userInfo.user.documents);
 
     const info: UserStateType = getUserInfo(userInfo.token);
     dispatch(updateUser(info));
 
-    if (info.role === 'employee' && userInfo.user.onboarding !== 'approved') {
-      window.location.href = `/${info.role}/onboarding`;
-    } else {
-      window.location.href = `/${info.role}`;
-    }
+    window.location.href = `/${info.role}`;
   } catch (e) {
     console.error(String(e));
     message.error(String(e));

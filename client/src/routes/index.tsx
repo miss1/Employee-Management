@@ -72,12 +72,12 @@ const router = createBrowserRouter([
         children: [
           {
             path: '/employee',
-            element: <PersonalInfo />,
+            element: <OnBoarding />,
             errorElement: <ErrorPage />
           },
           {
-            path: '/employee/onboarding',
-            element: <OnBoarding />,
+            path: '/employee/info',
+            element: <PersonalInfo />,
             errorElement: <ErrorPage />
           },
           {

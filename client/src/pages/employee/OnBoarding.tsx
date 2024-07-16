@@ -1,10 +1,11 @@
 import { Steps } from 'antd';
 import {useState} from "react";
-import { getCurrentOnboardingStep } from '../../utils/util';
 import OnboardingForm from '../../components/OnboardingForm';
 
+// const allSteps = ['never', 'pending', 'rejected'];
+
 const OnBoarding = () => {
-  const [currentStep, setCurrentStep] = useState(getCurrentOnboardingStep());
+  const [currentStep, setCurrentStep] = useState(0);
   const [feedback, setFeedback] = useState('');
 
   const updateSteps = (step: number, msg: string) => {

@@ -7,13 +7,15 @@ import { UploadRequestOption } from 'rc-upload/lib/interface';
 import { useAppSelector } from "../app/hooks.ts";
 
 interface propsType {
-  callback: (url: string) => void
+  callback: (url: string) => void,
+  disable: boolean,
+  defaultUrl: string,
 }
 
-const UploadImage: FC<propsType> = ({ callback }) => {
+const UploadImage: FC<propsType> = ({ callback, disable, defaultUrl }) => {
   const user = useAppSelector((state) => state.user);
 
-  const [fileUrl, setFileUrl] = useState<string>();
+  const [fileUrl, setFileUrl] = useState<string>(defaultUrl);
   const [loading, setLoading] = useState(false);
 
   const uploadButton = (
@@ -59,7 +61,8 @@ const UploadImage: FC<propsType> = ({ callback }) => {
       listType="picture-card"
       className="avatar-uploader"
       showUploadList={false}
-      customRequest={customRequest}>
+      customRequest={customRequest}
+      disabled={disable}>
       {fileUrl ? <img src={fileUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
     </Upload>
   );

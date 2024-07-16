@@ -39,7 +39,7 @@ export interface ContactType {
   relationship: string
 }
 
-export interface OnboardingInformationType {
+export interface OnboardingFormType {
   firstName: string,
   lastName: string,
   middleName: string,
@@ -52,12 +52,17 @@ export interface OnboardingInformationType {
   workPhone: string,
   email: string,
   ssn: string,
-  birthDate: string,
   gender: string,
   workAuth: string,
   workAuthOther: string,
-  workAuthStart: string,
-  workAuthEnd: string,
   reference: ContactType,
   emergencyContacts: ContactType[]
+}
+
+export interface OnboardingInformationType extends OnboardingFormType {
+  birthDate: string,
+  picture: string,
+  workAuthStart: string,
+  workAuthEnd: string,
+  optReceipt: string
 }

@@ -12,9 +12,3 @@ export const parseToken = <T>(token: string): T | null => {
   }
   return null;
 };
-
-export const getCurrentOnboardingStep = (): number => {
-  const status = localStorage.getItem('onboarding') || 'never';
-  const all = ['never', 'pending', 'rejected'];
-  return all.findIndex((item) => item === status);
-};

@@ -2,7 +2,6 @@ const { gql } = require('apollo-server-express');
 
 const information = gql`
   type Person {
-    id: ID!
     firstName: String!
     lastName: String!
     middleName: String
@@ -23,6 +22,8 @@ const information = gql`
   type Information {
     id: ID!
     user: User!
+    onboarding: String!
+    feedback: String
     firstName: String!
     lastName: String!
     middleName: String
@@ -109,6 +110,7 @@ const information = gql`
   
   type Query {
     information(id: ID!): Information
+    userInformation: Information
     allInformation(search: String): [Information]
     visaInformation(workAuth: String!, search: String): [Information]
   }

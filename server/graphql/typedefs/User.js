@@ -5,13 +5,9 @@ const user = gql`
     id: ID!
     username: String!
     email: String!
+    backupEmail: String!
     role: String!
     password: String!
-    onboarding: String!
-    feedback: String!
-    information: Information
-    documents: Document
-    status: Int!
     createdAt: Int
   }
   
@@ -20,12 +16,8 @@ const user = gql`
     user: User
   }
   
-  type Query {
-    usersByStatus(status: Int!): User
-  }
-  
   type Mutation {
-    register(username: String!, password: String!, token: String!): String
+    register(username: String!, password: String!, email: String!, token: String!): String
     login(username: String!, password: String!): AuthPayload
   }
 `;

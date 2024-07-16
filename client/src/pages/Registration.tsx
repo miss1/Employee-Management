@@ -35,7 +35,7 @@ const Registration = () => {
   const info: tokenType | null = parseToken(token);
 
   const { control, handleSubmit } = useForm({
-    defaultValues: { username: '', password: '', token: token, email: (info && info.email) || '' },
+    defaultValues: { username: '', password: '', token: token, email: '' },
     resolver: zodResolver(schema)
   });
 
@@ -51,7 +51,7 @@ const Registration = () => {
   const doSubmit = async (params: RegistrationParamsType) => {
     showLoading(true);
     try {
-      const { data } = await register({variables: {username: params.username, password: params.password, token: params.token}});
+      const { data } = await register({variables: params});
       message.success(data.register);
       navigate('/');
     } catch (e) {
@@ -71,7 +71,7 @@ const Registration = () => {
             <Input />
           </FormItem>
           <FormItem control={control} name="email" label="Email" style={{textAlign: "left"}}>
-            <Input disabled={true} />
+            <Input />
           </FormItem>
           <FormItem control={control} name="username" label="Username" style={{textAlign: "left"}}>
             <Input />

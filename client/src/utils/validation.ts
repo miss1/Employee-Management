@@ -52,7 +52,6 @@ export const addOnboardingSchema = z.object({
     .refine(val => !val || phoneRegex.test(val), {message: "Invalid US phone number"}),
   email: z.string().email("Invalid email address"),
   ssn: z.string().regex(ssnRegex, {message: "Invalid SSN"}),
-  birthDate: z.object({}).required(),
   gender: z.string().min(1, { message: "Required" }),
   workAuth: z.string().min(1, { message: "Required" }),
   workAuthOther: z.string().optional(),
