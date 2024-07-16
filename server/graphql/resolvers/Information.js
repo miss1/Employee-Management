@@ -22,6 +22,7 @@ const updateInformationField = async (user, input) => {
 
 const resolver = {
   Query: {
+    // get info by INFO ID
     information: async (parent, { id }, context) => {
       if (context.user == null || context.user.role !== 'hr') {
         throw new Error('Unauthorized');
@@ -35,6 +36,7 @@ const resolver = {
         throw new Error(e.message || 'error');
       }
     },
+    // get info by user id
     userInformation: async (parent, args, context) => {
       if (context.user == null || context.user.role !== 'employee') {
         throw new Error('Unauthorized');
@@ -48,6 +50,7 @@ const resolver = {
         throw new Error(e.message || 'error');
       }
     },
+    // get all info
     allInformation: async (parent, { search }, context) => {
       if (context.user == null || context.user.role !== 'hr') {
         throw new Error('Unauthorized');
@@ -70,6 +73,19 @@ const resolver = {
         throw new Error(e.message || 'error');
       }
     },
+    // get applications by onboarding status
+    applications: async (parent, { onboarding }, context) => {
+      if (context.user == null || context.user.role !== 'hr') {
+        throw new Error('Unauthorized');
+      }
+
+      try {
+        return await Information.find({ onboarding }).exec();
+      } catch (e) {
+        throw new Error(e.message || 'error');
+      }
+    },
+    // get information by work auth
     visaInformation: async (parent, { workAuth, search }, context) => {
       if (context.user == null || context.user.role !== 'hr') {
         throw new Error('Unauthorized');
@@ -95,6 +111,7 @@ const resolver = {
     }
   },
   Mutation: {
+    // submit a application
     createInformation: async (parent, { input }, context) => {
       if (context.user == null || context.user.role !== 'employee') {
         throw new Error('Unauthorized');
@@ -118,6 +135,7 @@ const resolver = {
         throw new Error(e.message || 'error');
       }
     },
+    // update application
     updateInformation: async (parent, { input }, context) => {
       if (context.user == null || context.user.role !== 'employee') {
         throw new Error('Unauthorized');
@@ -143,6 +161,7 @@ const resolver = {
         throw new Error(e.message || 'error');
       }
     },
+    // employee: update information
     updateName: async (parent, { input }, context) => {
       return await updateInformationField(context.user, input);
     },

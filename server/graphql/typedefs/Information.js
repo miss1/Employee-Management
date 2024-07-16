@@ -112,6 +112,7 @@ const information = gql`
     information(id: ID!): Information
     userInformation: Information
     allInformation(search: String): [Information]
+    applications(onboarding: String): [Information]
     visaInformation(workAuth: String!, search: String): [Information]
   }
   

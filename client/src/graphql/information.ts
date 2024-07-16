@@ -56,3 +56,14 @@ export const USER_INFO = gql`
     }
   }
 `;
+
+export const APPLICATIONS = gql`
+  query Applications($onboarding: String!) {
+    applications(onboarding: $onboarding) {
+      id,
+      firstName,
+      lastName,
+      email
+    }
+  }
+`

@@ -53,7 +53,11 @@ export const doLogin = (params: LoginParamsType) => async (dispatch: AppDispatch
     const info: UserStateType = getUserInfo(userInfo.token);
     dispatch(updateUser(info));
 
-    window.location.href = `/${info.role}`;
+    if (info.role === 'employee') {
+      window.location.href = `/onboarding`;
+    } else {
+      window.location.href = `/${info.role}`;
+    }
   } catch (e) {
     console.error(String(e));
     message.error(String(e));
