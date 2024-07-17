@@ -6,7 +6,7 @@ const document = gql`
     user: User!
     step: Int!
     status: String!
-    feedback: String!
+    feedback: String
     optReceipt: String!
     optEAD: String
     i983: String
@@ -15,11 +15,11 @@ const document = gql`
   }
   
   type Query {
-    document(id: ID!): Document
+    document: Document
   }
   
   type Mutation {
-    updateDocument(step: Int!, file: String!): Document
+    updateDocument(step: Int!, file: String!): String
   }
 `;
 

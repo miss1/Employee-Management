@@ -12,9 +12,10 @@ interface propsType {
   callback: (url: string) => void,
   disabled: boolean,
   defaultUrl: string,
+  fileName: string
 }
 
-const UploadFile: FC<propsType> = ({ callback, disabled, defaultUrl }) => {
+const UploadFile: FC<propsType> = ({ callback, disabled, defaultUrl, fileName }) => {
   const user = useAppSelector((state) => state.user);
   const [fileList, setFileList] = useState<UploadFile[]>( []);
 
@@ -23,7 +24,7 @@ const UploadFile: FC<propsType> = ({ callback, disabled, defaultUrl }) => {
       setFileList([
         {
           uid: '-1',
-          name: `${user.username}_OPT.pdf`,
+          name: `${user.username}_${fileName}.pdf`,
           status: 'done',
           url: defaultUrl,
           thumbUrl: fileIcon,

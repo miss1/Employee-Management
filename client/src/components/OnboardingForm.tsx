@@ -264,7 +264,7 @@ const OnboardingForm: FC<propsType> = ({ callback }) => {
         {watchWorkAuth === 'F1' && (
           <div>
             <p><span className="star">*</span>Please upload your OPT Receipt</p>
-            <UploadFile defaultUrl={optReceipt} disabled={!editable} callback={(url) => {
+            <UploadFile defaultUrl={optReceipt} disabled={!editable} fileName="OPT" callback={(url) => {
               setOptReceipt(url)
             }}/>
           </div>

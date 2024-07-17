@@ -204,14 +204,13 @@ const resolver = {
 
       try {
         const infoID = new mongoose.Types.ObjectId(id);
-        const information = Information.findById(infoID);
+        const information = await Information.findById(infoID);
 
-        const userId = new mongoose.Types.ObjectId(information.user);
-        await Document.findByIdAndDelete({user: userId});
+        await Document.findOneAndDelete({user: information.user});
 
         if (information.workAuth === 'F1') {
           const document = new Document({
-            user: userId,
+            user: information.user,
             step: 1,
             status: 'pending',
             optReceipt: information.optReceipt
