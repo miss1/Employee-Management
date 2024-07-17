@@ -1,4 +1,4 @@
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {Button, message, Upload} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { storage } from '../utils/firebaseConfig.ts';
@@ -16,15 +16,19 @@ interface propsType {
 
 const UploadFile: FC<propsType> = ({ callback, disabled, defaultUrl }) => {
   const user = useAppSelector((state) => state.user);
-  const [fileList, setFileList] = useState<UploadFile[]>(defaultUrl ? [
-    {
-      uid: '-1',
-      name: `${user.username}_OPT.pdf`,
-      status: 'done',
-      url: defaultUrl,
-      thumbUrl: fileIcon,
-    }
-  ] : []);
+  const [fileList, setFileList] = useState<UploadFile[]>( []);
+
+  useEffect(() => {
+    setFileList([
+      {
+        uid: '-1',
+        name: `${user.username}_OPT.pdf`,
+        status: 'done',
+        url: defaultUrl,
+        thumbUrl: fileIcon,
+      }
+    ])
+  }, [defaultUrl]);
 
   const customRequest = async ({ file }: UploadRequestOption) => {
     const storageRef = ref(storage, `file/${user.username}_OPT`);

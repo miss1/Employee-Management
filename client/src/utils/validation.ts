@@ -61,3 +61,50 @@ export const addOnboardingSchema = z.object({
   message: "Required",
   path: ["workAuthOther"],
 });
+
+export const nameSchema = z.object({
+  firstName: z
+    .string()
+    .min(1, { message: "Required" })
+    .max(10, { message: "FirstName should be less than 10 characters" }),
+  lastName: z
+    .string()
+    .min(1, { message: "Required" })
+    .max(10, { message: "LastName should be less than 10 characters" }),
+  middleName: z.string().optional(),
+  preferredName: z.string().optional(),
+  email: z.string().email("Invalid email address"),
+  ssn: z.string().regex(ssnRegex, {message: "Invalid SSN"}),
+  gender: z.string().min(1, { message: "Required" }),
+});
+
+export const addressSchema = z.object({
+  addressLine: z
+    .string()
+    .min(1, { message: "Required" })
+    .max(100, { message: "Address should be less than 100 characters" }),
+  city: z
+    .string()
+    .min(1, { message: "Required" })
+    .max(30, { message: "City should be less than 30 characters" }),
+  state: z
+    .string()
+    .min(1, { message: "Required" })
+    .max(30, { message: "State should be less than 30 characters" }),
+  postalCode: z.string().regex(zipCodeRegex, {message: "Invalid US postal code"}),
+});
+
+export const contactSchema = z.object({
+  cellPhone: z.string().regex(phoneRegex, { message: "Invalid US phone number"}),
+  workPhone: z.string().optional()
+    .refine(val => !val || phoneRegex.test(val), {message: "Invalid US phone number"}),
+});
+
+export const employmentSchema = z.object({
+  workAuth: z.string().min(1, { message: "Required" }),
+  workAuthOther: z.string().optional(),
+});
+
+export const emergencySchema = z.object({
+  emergencyContacts: z.array(personSchema),
+});

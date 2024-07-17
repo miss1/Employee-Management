@@ -66,3 +66,42 @@ export interface OnboardingInformationType extends OnboardingFormType {
   workAuthEnd: string,
   optReceipt: string
 }
+
+export interface NameFormType {
+  firstName: string,
+  lastName: string,
+  middleName: string,
+  preferredName: string,
+  email: string,
+  ssn: string,
+  gender: string,
+}
+
+export interface NameSectionType extends NameFormType {
+  birthDate: string,
+  picture: string,
+}
+
+export interface AddressFormType {
+  addressLine: string,
+  city: string,
+  state: string,
+  postalCode: string,
+}
+
+export interface ContactFormType {
+  cellPhone: string,
+  workPhone: string,
+}
+
+export interface EmploymentFormType {
+  workAuth: string,
+  workAuthOther: string,
+  workAuthStart: string,
+  workAuthEnd: string,
+  optReceipt: string
+}
+
+export interface EmergencyFormInfo {
+  emergencyContacts: ContactType[]
+}

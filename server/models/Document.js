@@ -28,30 +28,12 @@ const documentSchema = new mongoose.Schema({
   },
   optEAD: {
     type: String,
-    validate: {
-      validator: function (value) {
-        return this.step < 2 || (this.step >= 2 && value);
-      },
-      message: 'OPT EAD is required'
-    }
   },
   i983: {
     type: String,
-    validate: {
-      validator: function (value) {
-        return this.step < 3 || (this.step >= 3 && value);
-      },
-      message: 'I-983 is required'
-    }
   },
   i20: {
     type: String,
-    validate: {
-      validator: function (value) {
-        return this.step < 4 || (this.step === 4 && value);
-      },
-      message: 'I20 is required'
-    }
   },
   createdAt: {
     type: Number,

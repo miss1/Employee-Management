@@ -106,39 +106,15 @@ const informationSchema = new mongoose.Schema({
   },
   workAuthOther: {
     type: String,
-    validate: {
-      validator: function (value) {
-        return this.workAuth !== 'Other' || (this.workAuth === 'Other' && value);
-      },
-      message: 'Work Auth is required'
-    }
   },
   workAuthStart: {
     type: String,
-    validate: {
-      validator: function (value) {
-        return this.workAuth === 'GreenCard' || this.workAuth === 'Citizen' || value;
-      },
-      message: 'Work Auth start date is required'
-    }
   },
   workAuthEnd: {
     type: String,
-    validate: {
-      validator: function (value) {
-        return this.workAuth === 'GreenCard' || this.workAuth === 'Citizen' || value;
-      },
-      message: 'Work Auth end date is required'
-    }
   },
   optReceipt: {
     type: String,
-    validate: {
-      validator: function (value) {
-        return this.workAuth !== 'F1' || (this.workAuth === 'F1' && value);
-      },
-      message: 'OPT Receipt is required when you are a F1'
-    }
   },
   reference: {
     type: personSchema,

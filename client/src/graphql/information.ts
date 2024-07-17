@@ -46,13 +46,13 @@ export const USER_INFO = gql`
         relationship
       },
       emergencyContacts {
-          firstName,
-          lastName,
-          middleName,
-          phone,
-          email,
-          relationship
-        }
+        firstName,
+        lastName,
+        middleName,
+        phone,
+        email,
+        relationship
+      }
     }
   }
 `;
@@ -67,3 +67,59 @@ export const APPLICATIONS = gql`
     }
   }
 `
+
+export const INFORMATION = gql`
+  query Information($id: String!) {
+    information(id: $id) {
+      onboarding,
+      firstName,
+      lastName,
+      middleName,
+      preferredName,
+      picture,
+      addressLine,
+      city,
+      state,
+      postalCode,
+      cellPhone,
+      workPhone,
+      email,
+      ssn,
+      birthDate,
+      gender,
+      workAuth,
+      workAuthOther,
+      workAuthStart,
+      workAuthEnd,
+      optReceipt,
+      reference {
+        firstName,
+        lastName,
+        middleName,
+        phone,
+        email,
+        relationship
+      },
+      emergencyContacts {
+        firstName,
+        lastName,
+        middleName,
+        phone,
+        email,
+        relationship
+      }
+    }
+  }
+`
+
+export const APPROVE_APPLICATION = gql`
+  mutation ApproveApplication($id: String!) {
+    approveApplication(id: $id)
+  }
+`;
+
+export const REJECT_APPLICATION = gql`
+  mutation RejectApplication($id: String!, $feedback: String!) {
+    rejectApplication(id: $id, feedback: $feedback)
+  }
+`;

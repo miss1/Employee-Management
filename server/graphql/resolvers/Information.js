@@ -20,6 +20,20 @@ const updateInformationField = async (user, input) => {
   }
 };
 
+const formValidate = (input) => {
+  if (input.workAuth === 'Other' && input.workAuthOther === '') {
+    throw new Error('Work Auth is required');
+  }
+
+  if (input.workAuth !== 'GreenCard' && input.workAuth !== 'Citizen' && (input.workAuthStart === '' || input.workAuthEnd === '')) {
+    throw new Error('Work Auth start and end date is required');
+  }
+
+  if (input.workAuth === 'F1' && input.optReceipt === '') {
+    throw new Error('OPT Receipt is required when you are a F1');
+  }
+}
+
 const resolver = {
   Query: {
     // get info by INFO ID
@@ -111,11 +125,13 @@ const resolver = {
     }
   },
   Mutation: {
-    // submit a application
+    // submit an application
     createInformation: async (parent, { input }, context) => {
       if (context.user == null || context.user.role !== 'employee') {
         throw new Error('Unauthorized');
       }
+
+      formValidate(input);
 
       try {
         // create application
@@ -135,11 +151,13 @@ const resolver = {
         throw new Error(e.message || 'error');
       }
     },
-    // update application
+    // update an application
     updateInformation: async (parent, { input }, context) => {
       if (context.user == null || context.user.role !== 'employee') {
         throw new Error('Unauthorized');
       }
+
+      formValidate(input);
 
       try {
         const userID = new mongoose.Types.ObjectId(context.user._id);
@@ -176,6 +194,36 @@ const resolver = {
     },
     updateEmergencyContact: async (parent, { input }, context) => {
       return await updateInformationField(context.user, input);
+    },
+    // hr: approve an application
+    approveApplication: async (parent, { id }, context) => {
+      if (context.user == null || context.user.role !== 'hr') {
+        throw new Error('Unauthorized');
+      }
+
+      try {
+        const infoID = new mongoose.Types.ObjectId(id);
+        await Information.findByIdAndUpdate(infoID, { onboarding: 'approved', feedback: '' });
+      } catch (e) {
+        throw new Error(e.message || 'error');
+      }
+
+      return "Approve the application successfully";
+    },
+    // hr: reject an application
+    rejectApplication: async (parent, { id, feedback }, context) => {
+      if (context.user == null || context.user.role !== 'hr') {
+        throw new Error('Unauthorized');
+      }
+
+      try {
+        const infoID = new mongoose.Types.ObjectId(id);
+        await Information.findByIdAndUpdate(infoID, { onboarding: 'rejected', feedback: feedback });
+      } catch (e) {
+        throw new Error(e.message || 'error');
+      }
+
+      return "Reject the application successfully";
     },
   }
 };

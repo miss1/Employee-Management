@@ -109,7 +109,7 @@ const information = gql`
   }
   
   type Query {
-    information(id: ID!): Information
+    information(id: String!): Information
     userInformation: Information
     allInformation(search: String): [Information]
     applications(onboarding: String): [Information]
@@ -124,6 +124,8 @@ const information = gql`
     updateContact(input: InformationContact!): Information
     updateEmployment(input: InformationEmployment!): Information
     updateEmergencyContact(input: InformationEmergencyContact!): Information
+    approveApplication(id: String!): String
+    rejectApplication(id: String!, feedback: String!): String
   }
 `;
 

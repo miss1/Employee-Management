@@ -1,4 +1,4 @@
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { message, Upload } from 'antd';
 import { storage } from '../utils/firebaseConfig.ts';
@@ -14,9 +14,12 @@ interface propsType {
 
 const UploadImage: FC<propsType> = ({ callback, disable, defaultUrl }) => {
   const user = useAppSelector((state) => state.user);
-
-  const [fileUrl, setFileUrl] = useState<string>(defaultUrl);
+  const [fileUrl, setFileUrl] = useState(defaultUrl);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setFileUrl(defaultUrl);
+  }, [defaultUrl]);
 
   const uploadButton = (
     <button style={{ border: 0, background: 'none' }} type="button">
