@@ -15,6 +15,7 @@ import OnboardingReview from '../pages/hr/OnboardingReview.tsx';
 import PersonalInfo from '../pages/employee/PersonalInfo.tsx';
 import EmVisaStatus from '../pages/employee/VisaStatus.tsx';
 import Application from '../pages/hr/Appilcation.tsx';
+import ProfileDetail from '../pages/hr/ProfileDetail.tsx';
 
 const router = createBrowserRouter([
   {
@@ -86,6 +87,11 @@ const router = createBrowserRouter([
       {
         path: '/application/:id',
         element: <ProtectedRoute type='hr'><Application /></ProtectedRoute>,
+        errorElement: <ErrorPage />
+      },
+      {
+        path: '/employee/:id',
+        element: <ProtectedRoute type='hr'><ProfileDetail /></ProtectedRoute>,
         errorElement: <ErrorPage />
       },
       {

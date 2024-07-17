@@ -12,7 +12,7 @@ const columns = [
     title: 'Name',
     key: 'name',
     render: (_, record) => (
-      <a href=''>{record.firstName} {record.lastName}</a>
+      <a href={`/employee/${record.id}`} target="_blank">{record.firstName} {record.lastName}</a>
     ),
   },
   {
