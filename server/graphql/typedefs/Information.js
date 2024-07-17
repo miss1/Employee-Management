@@ -107,7 +107,7 @@ const information = gql`
   }
   
   input InformationEmergencyContact {
-    emergencyContacts: [ID!]
+    emergencyContacts: [PersonInput!]
   }
   
   type Query {

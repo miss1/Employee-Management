@@ -36,6 +36,12 @@ export const UPDATE_EMPLOYMENT_INFO = gql`
   }
 `;
 
+export const UPDATE_EMERGENCY_INFO = gql`
+  mutation updateEmergencyContact($input: InformationEmergencyContact!) {
+    updateEmergencyContact(input: $input)
+  }
+`;
+
 export const USER_INFO = gql`
   query UserInformation {
     userInformation {
