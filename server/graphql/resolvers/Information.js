@@ -1,4 +1,5 @@
 const Information = require('../../models/Information');
+const Document = require('../../models/Document');
 const User = require("../../models/User");
 const Registration = require('../../models/Registration');
 const mongoose = require("mongoose");
@@ -203,6 +204,21 @@ const resolver = {
 
       try {
         const infoID = new mongoose.Types.ObjectId(id);
+        const information = Information.findById(infoID);
+
+        const userId = new mongoose.Types.ObjectId(information.user);
+        await Document.findByIdAndDelete({user: userId});
+
+        if (information.workAuth === 'F1') {
+          const document = new Document({
+            user: userId,
+            step: 1,
+            status: 'pending',
+            optReceipt: information.optReceipt
+          });
+          await document.save();
+        }
+
         await Information.findByIdAndUpdate(infoID, { onboarding: 'approved', feedback: '' });
       } catch (e) {
         throw new Error(e.message || 'error');

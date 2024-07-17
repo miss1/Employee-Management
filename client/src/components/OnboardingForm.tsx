@@ -9,7 +9,8 @@ import { addOnboardingSchema } from '../utils/validation.ts';
 import { OnboardingFormType, OnboardingInformationType } from '../utils/type.ts';
 import UploadImage from './UploadImage.tsx';
 import UploadFile from './UploadFile.tsx';
-import { useAppSelector } from "../app/hooks.ts";
+import { useAppSelector, useAppDispatch } from "../app/hooks.ts";
+import { updateVisaStatus } from '../app/slice/notification.ts';
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_INFO, UPDATE_INFO, USER_INFO } from '../graphql/information.ts';
@@ -26,6 +27,8 @@ const dateFormat = 'YYYY-MM-DD';
 const OnboardingForm: FC<propsType> = ({ callback }) => {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user);
+
+  const dispatch = useAppDispatch();
 
   const [editable, setEditable] = useState(true);
 
@@ -105,6 +108,8 @@ const OnboardingForm: FC<propsType> = ({ callback }) => {
       setWorkAuthStart(formData.userInformation.workAuthStart);
       setWorkAuthEnd(formData.userInformation.workAuthEnd);
       setBirthDate(formData.userInformation.birthDate);
+
+      dispatch(updateVisaStatus(formData.userInformation.workAuth));
     }
   }, [formData, setValue]);
 

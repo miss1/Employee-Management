@@ -11,6 +11,8 @@ import {UPDATE_EMPLOYMENT_INFO} from "../graphql/information.ts";
 import {CloseOutlined, EditOutlined} from "@ant-design/icons";
 import UploadFile from "./UploadFile.tsx";
 import dayjs from "dayjs";
+import { useAppDispatch } from "../app/hooks.ts";
+import { updateVisaStatus } from '../app/slice/notification.ts';
 
 interface propsType {
   data: OnboardingInformationType,
@@ -26,6 +28,8 @@ const EmploymentForm: FC<propsType> = ({ data, callback }) => {
   const [citizenStatus, setCitizenStatus] = useState(data.workAuth === 'GreenCard' || data.workAuth === 'Citizen');
   const [workAuthStart, setWorkAuthStart] = useState(data.workAuthStart);
   const [workAuthEnd, setWorkAuthEnd] = useState(data.workAuthEnd);
+
+  const dispatch = useAppDispatch();
 
   const { control, handleSubmit, setValue, watch } = useForm({
     defaultValues: {workAuth: '', workAuthOther: ''},
@@ -47,6 +51,8 @@ const EmploymentForm: FC<propsType> = ({ data, callback }) => {
     setCitizenStatus(data.workAuth === 'GreenCard' || data.workAuth === 'Citizen');
     setWorkAuthStart(data.workAuthStart);
     setWorkAuthEnd(data.workAuthEnd);
+
+    dispatch(updateVisaStatus(data.workAuth));
   }
 
   useEffect(() => {

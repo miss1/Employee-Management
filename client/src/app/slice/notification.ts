@@ -1,17 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
 export const notificationSlice = createSlice({
   name: 'notification',
   initialState: {
     tokenHistory: false,
+    visaStatus: ''
   },
   reducers: {
     updateTokenHistory: (state) => {
       state.tokenHistory = !state.tokenHistory;
     },
+    updateVisaStatus: (state, action: PayloadAction<string>) => {
+      state.visaStatus = action.payload;
+    }
   },
 });
 
-export const { updateTokenHistory } = notificationSlice.actions;
+export const { updateTokenHistory, updateVisaStatus } = notificationSlice.actions;
 
 export default notificationSlice.reducer;

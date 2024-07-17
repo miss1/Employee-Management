@@ -20,7 +20,7 @@ const documentSchema = new mongoose.Schema({
   },
   feedback: {
     type: String,
-    required: true,
+    default: ''
   },
   optReceipt: {
     type: String,
