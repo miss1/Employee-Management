@@ -18,3 +18,17 @@ export const UPDATE_DOCUMENT = gql`
     updateDocument(step: $step, file: $file)
   }
 `;
+
+export const UNFINISHED_DOCUMENTS = gql`
+  query unfinishedDocument {
+    unfinishedDocument {
+      name,
+      workAuth,
+      workAuthStart,
+      workAuthEnd,
+      nextStep,
+      file,
+      fileType
+    }
+  }
+`

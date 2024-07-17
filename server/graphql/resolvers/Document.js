@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Document = require("../../models/Document");
+const Information = require("../../models/Information");
 const resolver = {
   Query: {
     document: async (parent, arg, context) => {
@@ -16,6 +17,40 @@ const resolver = {
         }
 
         return document;
+      } catch (e) {
+        throw new Error(e.message || 'error');
+      }
+    },
+    unfinishedDocument: async (parent, arg, context) => {
+      if (context.user == null || context.user.role !== 'hr') {
+        throw new Error('Unauthorized');
+      }
+
+      try {
+        const documents = await Document.find({
+          $or: [
+            { step: { $ne: 4 } },
+            { step: 4, status: { $ne: 'approved' } }
+          ]
+        });
+
+        const fileName = ['optReceipt', 'optEAD', 'i983', 'i20'];
+        const fileType = ['OPT.pdf', 'EAD.pdf', 'I983.pdf', 'I20.pdf'];
+
+        const results = await Promise.all(documents.map(async (document) => {
+          const info = await Information.findOne({ user: document.user });
+          return {
+            name: info.firstName + ' ' + info.lastName,
+            workAuth: info.workAuth,
+            workAuthStart: info.workAuthStart,
+            workAuthEnd: info.workAuthEnd,
+            nextStep: document.status === 'pending' ? 0 : 1,
+            file: document.status === 'pending' ? document[fileName[document.step - 1]] : '',
+            fileType: fileType[document.step - 1]
+          };
+        }));
+
+        return results;
       } catch (e) {
         throw new Error(e.message || 'error');
       }

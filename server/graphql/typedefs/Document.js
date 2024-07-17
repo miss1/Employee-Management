@@ -14,8 +14,19 @@ const document = gql`
     createdAt: Int
   }
   
+  type UnfinishedDocument {
+    name: String!
+    workAuth: String!
+    workAuthStart: String!
+    workAuthEnd: String!
+    nextStep: Int!
+    file: String,
+    fileType: String
+  }
+  
   type Query {
     document: Document
+    unfinishedDocument: [UnfinishedDocument]
   }
   
   type Mutation {
