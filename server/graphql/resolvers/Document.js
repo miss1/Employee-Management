@@ -39,14 +39,25 @@ const resolver = {
 
         const results = await Promise.all(documents.map(async (document) => {
           const info = await Information.findOne({ user: document.user });
+
+          let currentFile = '';
+          if (document.status === 'pending') {
+            currentFile = fileType[document.step - 1];
+          } else if (document.status === 'approved') {
+            currentFile = document.step !== 4 ? fileType[document.step] : ''
+          } else {
+            currentFile = fileType[document.step - 1];
+          }
+
           return {
+            id: document._id,
             name: info.firstName + ' ' + info.lastName,
             workAuth: info.workAuth,
             workAuthStart: info.workAuthStart,
             workAuthEnd: info.workAuthEnd,
             nextStep: document.status === 'pending' ? 0 : 1,
             file: document.status === 'pending' ? document[fileName[document.step - 1]] : '',
-            fileType: fileType[document.step - 1]
+            fileType: currentFile
           };
         }));
 
@@ -69,7 +80,12 @@ const resolver = {
           throw new Error('The document does not exist');
         }
 
-        if (document.step !== step - 1 || document.status !== 'approved') {
+        let currentStep = step;
+        if (document.step === step && document.status === 'rejected') {
+          currentStep = step;
+        } else if (document.step === step - 1 && document.status === 'approved') {
+          currentStep = step - 1;
+        } else {
           throw new Error('You can not upload new file now');
         }
 
@@ -78,12 +94,53 @@ const resolver = {
           step,
           status: 'pending',
           feedback: '',
-          [fileName[step - 1]]: file,
+          [fileName[currentStep]]: file,
         }
 
         await Document.findByIdAndUpdate(document._id, params, { new: true, runValidators: true });
 
         return "Upload Successfully";
+      } catch (e) {
+        throw new Error(e.message || 'error');
+      }
+    },
+    approveDocument: async (parent, { id }, context) => {
+      if (context.user == null || context.user.role !== 'hr') {
+        throw new Error('Unauthorized');
+      }
+
+      try {
+        const docId = new mongoose.Types.ObjectId(id);
+        const document = await Document.findById(docId);
+
+        if (document.status !== 'pending') {
+          throw new Error('Can not approve');
+        }
+
+        await Document.findByIdAndUpdate(docId, { status: 'approved' });
+
+        return "Approved Successfully";
+      } catch (e) {
+        throw new Error(e.message || 'error');
+      }
+    },
+
+    rejectDocument: async (parent, { id, feedback }, context) => {
+      if (context.user == null || context.user.role !== 'hr') {
+        throw new Error('Unauthorized');
+      }
+
+      try {
+        const docId = new mongoose.Types.ObjectId(id);
+        const document = await Document.findById(docId);
+
+        if (document.status !== 'pending') {
+          throw new Error('Can not reject');
+        }
+
+        await Document.findByIdAndUpdate(docId, { status: 'rejected', feedback });
+
+        return "Rejected Successfully";
       } catch (e) {
         throw new Error(e.message || 'error');
       }

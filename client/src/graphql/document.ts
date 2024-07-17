@@ -22,6 +22,7 @@ export const UPDATE_DOCUMENT = gql`
 export const UNFINISHED_DOCUMENTS = gql`
   query unfinishedDocument {
     unfinishedDocument {
+      id,
       name,
       workAuth,
       workAuthStart,
@@ -32,3 +33,15 @@ export const UNFINISHED_DOCUMENTS = gql`
     }
   }
 `
+
+export const APPROVE_DOCUMENT = gql`
+  mutation ApproveDocument($id: String!) {
+    approveDocument(id: $id)
+  }
+`;
+
+export const REJECT_DOCUMENT = gql`
+  mutation rejectDocument($id: String!, $feedback: String!) {
+    rejectDocument(id: $id, feedback: $feedback)
+  }
+`;

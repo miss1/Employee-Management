@@ -33,10 +33,10 @@ const UploadFile: FC<propsType> = ({ callback, disabled, defaultUrl, fileName })
     } else {
       setFileList([]);
     }
-  }, [defaultUrl]);
+  }, [defaultUrl, fileName]);
 
   const customRequest = async ({ file }: UploadRequestOption) => {
-    const storageRef = ref(storage, `file/${user.username}_OPT`);
+    const storageRef = ref(storage, `file/${user.username}_${fileName}`);
     const uploadTask: UploadTask = uploadBytesResumable(storageRef, file as Blob);
 
     uploadTask.on(
@@ -45,7 +45,7 @@ const UploadFile: FC<propsType> = ({ callback, disabled, defaultUrl, fileName })
         setFileList([
           {
             uid: '0',
-            name: `${user.username}_OPT.pdf`,
+            name: `${user.username}_${fileName}.pdf`,
             status: 'uploading',
             percent: 33,
           },
@@ -57,7 +57,7 @@ const UploadFile: FC<propsType> = ({ callback, disabled, defaultUrl, fileName })
         setFileList([
           {
             uid: '-2',
-            name: `${user.username}_OPT.pdf`,
+            name: `${user.username}_${fileName}.pdf`,
             status: 'error',
             thumbUrl: fileIcon,
           },
@@ -71,7 +71,7 @@ const UploadFile: FC<propsType> = ({ callback, disabled, defaultUrl, fileName })
           setFileList([
             {
               uid: '-1',
-              name: `${user.username}_OPT.pdf`,
+              name: `${user.username}_${fileName}.pdf`,
               status: 'done',
               url: downloadURL,
               thumbUrl: fileIcon,
@@ -83,7 +83,7 @@ const UploadFile: FC<propsType> = ({ callback, disabled, defaultUrl, fileName })
           setFileList([
             {
               uid: '-2',
-              name: `${user.username}_OPT.pdf`,
+              name: `${user.username}_${fileName}.pdf`,
               status: 'error',
               thumbUrl: fileIcon,
             },

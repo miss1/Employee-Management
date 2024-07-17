@@ -212,7 +212,7 @@ const resolver = {
           const document = new Document({
             user: information.user,
             step: 1,
-            status: 'pending',
+            status: 'approved',
             optReceipt: information.optReceipt
           });
           await document.save();

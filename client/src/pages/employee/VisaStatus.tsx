@@ -39,10 +39,15 @@ const VisaStatus = () => {
     else return <p className={style.feedback}>{fileRequired[idx - 1].pending}</p>;
   };
 
+  const showUploadBtn = (idx: number) => {
+    return (data.document.step === idx && data.document.status === 'approved') || (data.document.step === idx + 1 && data.document.status === 'rejected');
+  };
+
   const doSubmitDocument = async (url: string) => {
     showLoading(true);
     try {
-      await updateDocument({variables: {step: data.document.step + 1, file: url}});
+      const step = data.document.status === 'rejected' ? data.document.step : data.document.step + 1;
+      await updateDocument({variables: {step: step, file: url}});
       message.success("Update successfully");
       refetch().then();
     } catch (e) {
@@ -70,7 +75,7 @@ const VisaStatus = () => {
               </a>
               {getFeedback(1)}
               {
-                data.document.step === 1 && data.document.status === 'approved' &&
+                showUploadBtn(1) &&
                 <UploadFile defaultUrl='' disabled={false} fileName="EAD" callback={(url) => {
                   doSubmitDocument(url);
                 }}/>
@@ -94,7 +99,7 @@ const VisaStatus = () => {
                   </a>
                   {getFeedback(2)}
                   {
-                    data.document.step === 2 && data.document.status === 'approved' &&
+                    showUploadBtn(2) &&
                     <>
                       <Flex style={{margin: "10px 0"}}>
                         <Button>Empty Template</Button>
@@ -127,7 +132,7 @@ const VisaStatus = () => {
                   </a>
                   {getFeedback(3)}
                   {
-                    data.document.step === 3 && data.document.status === 'approved' &&
+                    showUploadBtn(3) &&
                     <UploadFile defaultUrl='' disabled={false} fileName="I20" callback={(url) => {
                       doSubmitDocument(url);
                     }}/>

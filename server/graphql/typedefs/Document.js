@@ -15,6 +15,7 @@ const document = gql`
   }
   
   type UnfinishedDocument {
+    id: ID!
     name: String!
     workAuth: String!
     workAuthStart: String!
@@ -31,6 +32,8 @@ const document = gql`
   
   type Mutation {
     updateDocument(step: Int!, file: String!): String
+    approveDocument(id: String!): String
+    rejectDocument(id: String!, feedback: String!): String
   }
 `;
 
