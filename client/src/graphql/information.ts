@@ -153,3 +153,18 @@ export const REJECT_APPLICATION = gql`
     rejectApplication(id: $id, feedback: $feedback)
   }
 `;
+
+export const ALL_INFORMATION = gql`
+  query AllInformation($search: String) {
+    allInformation(search: $search) {
+      id,
+      firstName,
+      lastName,
+      ssn,
+      workAuth,
+      workAuthOther,
+      cellPhone,
+      email
+    }
+  }
+`
