@@ -1,6 +1,7 @@
 import NameForm from '../../components/NameForm';
 import AddressForm from '../../components/AddressForm';
 import ContactForm from '../../components/ContactForm';
+import EmploymentForm from '../../components/EmploymentForm';
 import { useQuery } from '@apollo/client';
 import { USER_INFO } from '../../graphql/information';
 import { message } from "antd";
@@ -21,6 +22,7 @@ const PersonalInfo = () => {
       <NameForm data={data.userInformation} callback={refreshPage}/>
       <AddressForm data={data.userInformation} callback={refreshPage}/>
       <ContactForm data={data.userInformation} callback={refreshPage}/>
+      <EmploymentForm data={data.userInformation} callback={refreshPage}/>
     </div>
   );
 };

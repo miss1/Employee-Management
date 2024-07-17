@@ -19,15 +19,19 @@ const UploadFile: FC<propsType> = ({ callback, disabled, defaultUrl }) => {
   const [fileList, setFileList] = useState<UploadFile[]>( []);
 
   useEffect(() => {
-    setFileList([
-      {
-        uid: '-1',
-        name: `${user.username}_OPT.pdf`,
-        status: 'done',
-        url: defaultUrl,
-        thumbUrl: fileIcon,
-      }
-    ])
+    if (defaultUrl) {
+      setFileList([
+        {
+          uid: '-1',
+          name: `${user.username}_OPT.pdf`,
+          status: 'done',
+          url: defaultUrl,
+          thumbUrl: fileIcon,
+        }
+      ])
+    } else {
+      setFileList([]);
+    }
   }, [defaultUrl]);
 
   const customRequest = async ({ file }: UploadRequestOption) => {

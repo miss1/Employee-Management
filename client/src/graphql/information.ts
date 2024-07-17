@@ -30,6 +30,12 @@ export const UPDATE_Contact_INFO = gql`
   }
 `;
 
+export const UPDATE_EMPLOYMENT_INFO = gql`
+  mutation UpdateEmployment($input: InformationEmployment!) {
+    updateEmployment(input: $input)
+  }
+`;
+
 export const USER_INFO = gql`
   query UserInformation {
     userInformation {

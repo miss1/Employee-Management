@@ -100,8 +100,9 @@ const information = gql`
   
   input InformationEmployment {
     workAuth: String!
-    workAuthStart: String!
-    workAuthEnd: String!
+    workAuthOther: String
+    workAuthStart: String
+    workAuthEnd: String
     optReceipt: String
   }
   

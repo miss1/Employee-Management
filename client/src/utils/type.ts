@@ -92,9 +92,6 @@ export interface ContactFormType {
 export interface EmploymentFormType {
   workAuth: string,
   workAuthOther: string,
-  workAuthStart: string,
-  workAuthEnd: string,
-  optReceipt: string
 }
 
 export interface EmergencyFormInfo {
