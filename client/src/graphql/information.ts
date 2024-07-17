@@ -18,6 +18,18 @@ export const UPDATE_NAME_INFO = gql`
   }
 `;
 
+export const UPDATE_ADDRESS_INFO = gql`
+  mutation UpdateAddress($input: InformationAddress!) {
+    updateAddress(input: $input)
+  }
+`;
+
+export const UPDATE_Contact_INFO = gql`
+  mutation UpdateContact($input: InformationContact!) {
+    updateContact(input: $input)
+  }
+`;
+
 export const USER_INFO = gql`
   query UserInformation {
     userInformation {
