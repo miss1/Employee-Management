@@ -14,7 +14,7 @@ const updateInformationField = async (user, input) => {
     if (!info) {
       throw new Error('Information not found');
     }
-    return info;
+    return 'Update Successfully';
   } catch (e) {
     throw new Error(e.message || 'error');
   }

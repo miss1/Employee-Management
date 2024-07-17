@@ -77,11 +77,6 @@ export interface NameFormType {
   gender: string,
 }
 
-export interface NameSectionType extends NameFormType {
-  birthDate: string,
-  picture: string,
-}
-
 export interface AddressFormType {
   addressLine: string,
   city: string,

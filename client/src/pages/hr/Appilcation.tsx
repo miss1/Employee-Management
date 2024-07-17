@@ -89,14 +89,7 @@ const Application = () => {
 
   return (
     <>
-      <div style={{
-        width: '100%',
-        overflowY: 'auto',
-        display: 'flex',
-        alignItems: 'center',
-        margin: '20px 0',
-        flexDirection: 'column'
-      }}>
+      <div className="scrollPage">
         <Card title="Name" style={{width: 700}}>
           <div style={{margin: "0 auto"}}>
             <Flex vertical justify="center" align="center">

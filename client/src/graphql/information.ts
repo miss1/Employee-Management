@@ -12,6 +12,12 @@ export const UPDATE_INFO = gql`
   }
 `;
 
+export const UPDATE_NAME_INFO = gql`
+  mutation UpdateName($input: InformationName!) {
+    updateName(input: $input)
+  }
+`;
+
 export const USER_INFO = gql`
   query UserInformation {
     userInformation {

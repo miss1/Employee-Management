@@ -83,6 +83,7 @@ const information = gql`
     ssn: String!
     birthDate: String!
     gender: String!
+    email: String!
   }
   
   input InformationAddress {
@@ -119,11 +120,11 @@ const information = gql`
   type Mutation {
     createInformation(input: InformationInput!): String
     updateInformation(input: InformationInput!): String
-    updateName(input: InformationName!): Information
-    updateAddress(input: InformationAddress!): Information
-    updateContact(input: InformationContact!): Information
-    updateEmployment(input: InformationEmployment!): Information
-    updateEmergencyContact(input: InformationEmergencyContact!): Information
+    updateName(input: InformationName!): String
+    updateAddress(input: InformationAddress!): String
+    updateContact(input: InformationContact!): String
+    updateEmployment(input: InformationEmployment!): String
+    updateEmergencyContact(input: InformationEmergencyContact!): String
     approveApplication(id: String!): String
     rejectApplication(id: String!, feedback: String!): String
   }

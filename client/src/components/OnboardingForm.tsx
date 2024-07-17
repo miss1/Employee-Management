@@ -69,7 +69,7 @@ const OnboardingForm: FC<propsType> = ({ callback }) => {
     showLoading(false);
     if (formData && formData.userInformation) {
       if (formData.userInformation.onboarding === 'approved') {
-        navigate('/employee/info');
+        navigate('/employee');
         return;
       }
 
