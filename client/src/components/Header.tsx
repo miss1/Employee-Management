@@ -38,16 +38,8 @@ const EMItems: MenuItem[] = [
   },
 ];
 
-const EMItems2: MenuItem[] = [
-  {
-    label: 'Personal Information',
-    key: '/employee',
-  },
-];
-
 const Header: FC<HeaderProps> = ({ type }) => {
   const user = useAppSelector((state) => state.user);
-  const visaStatus = useAppSelector((state) => state.notification.visaStatus);
   const navigate = useNavigate();
   const location = useLocation();
   const cleanPathname = location.pathname.endsWith('/') ? location.pathname.slice(0, -1) : location.pathname;
@@ -60,8 +52,7 @@ const Header: FC<HeaderProps> = ({ type }) => {
   return (
     <div className={style.header}>
       <Menu onClick={(e) => {navigate(e.key);}} selectedKeys={[cleanPathname]}
-            mode="horizontal" style={{ minWidth: 0, flex: "auto" }}
-            items={type === 'HR' ? HRItems : visaStatus === 'F1' ? EMItems : EMItems2} />
+            mode="horizontal" style={{ minWidth: 0, flex: "auto" }} items={type === 'HR' ? HRItems : EMItems} />
       <Flex gap="small" align="center">
         <UserOutlined style={{fontSize: 20}}/>
         <p>Welcome! {user.username}</p>

@@ -22,7 +22,7 @@ const VisaStatus = () => {
 
   const { loading, error, data, refetch } = useQuery(USER_DOCUMENT, );
 
-  if (error) message.error(String(error));
+  if (error) return <div className="loadingPage"><h2>No Actions Need</h2></div>
   if (loading) return <div className="loadingPage"><h2>Loading...</h2></div>
 
   const getIcon = (idx: number) => {
