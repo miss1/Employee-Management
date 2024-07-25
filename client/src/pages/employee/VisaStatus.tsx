@@ -7,6 +7,8 @@ import { USER_DOCUMENT, UPDATE_DOCUMENT } from '../../graphql/document.ts';
 import { useQuery, useMutation } from '@apollo/client';
 import useLoading from "../../hooks/useLoading.tsx";
 
+const i983Tmp = 'https://firebasestorage.googleapis.com/v0/b/bounty-romance.appspot.com/o/file%2Fi983-tmp.pdf?alt=media&token=065a83d2-d1a8-4460-ab87-c8b9626adea3';
+
 const fileRequired = [
   {name: 'OPT Receipt', pending: 'Waiting for HR to approve your OPT Receipt', approved: 'Please upload a copy of your OPT EAD'},
   {name: 'OPT EAD', pending: 'Waiting for HR to approve your OPT EAD', approved: 'Please download and fill out the I-983 form'},
@@ -102,9 +104,9 @@ const VisaStatus = () => {
                     showUploadBtn(2) &&
                     <>
                       <Flex style={{margin: "10px 0"}}>
-                        <Button>Empty Template</Button>
+                        <a href={i983Tmp} target="_blank">Empty Template</a>
                         <div style={{width: 10}}></div>
-                        <Button>Sample Template</Button>
+                        <a href={i983Tmp} target="_blank">Sample Template</a>
                       </Flex>
                       <UploadFile defaultUrl='' disabled={false} fileName="I983" callback={(url) => {
                         doSubmitDocument(url);
